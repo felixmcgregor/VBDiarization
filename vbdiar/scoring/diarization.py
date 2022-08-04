@@ -243,7 +243,7 @@ class Diarization(object):
                 n_clusters=num_speakers, n_init=100, n_jobs=1).fit(embeddings)
         else:
             kmeans_clustering = sklearnKMeans(
-                n_clusters=num_speakers, n_init=100, n_jobs=1).fit(embeddings)
+                n_clusters=num_speakers, n_init=100).fit(embeddings)
         centroids = kmeans_clustering.cluster_centers_
         if self.plda:
             centroids = PLDAKMeans(centroids=kmeans_clustering.cluster_centers_, k=num_speakers,
