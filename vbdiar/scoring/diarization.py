@@ -14,8 +14,6 @@ from subprocess import check_output
 from tempfile import mkdtemp, NamedTemporaryFile
 
 import numpy as np
-from spherecluster import SphericalKMeans
-from pyclustering.cluster.xmeans import xmeans
 from sklearn.cluster import KMeans as sklearnKMeans
 from sklearn.cluster import AgglomerativeClustering, DBSCAN, MeanShift
 from sklearn.metrics.pairwise import cosine_similarity, pairwise_distances
@@ -203,6 +201,7 @@ class Diarization(object):
                     if embedding_set.num_speakers is not None:
                         num_speakers = embedding_set.num_speakers
                     else:
+                        from pyclustering.cluster.xmeans import xmeans
                         xm = xmeans(embeddings_long, kmax=max_num_speakers)
                         xm.process()
                         num_speakers = len(xm.get_clusters())
@@ -239,6 +238,7 @@ class Diarization(object):
 
     def run_clustering(self, num_speakers, embeddings):
         if self.use_l2_norm:
+            from spherecluster import SphericalKMeans
             kmeans_clustering = SphericalKMeans(
                 n_clusters=num_speakers, n_init=100, n_jobs=1).fit(embeddings)
         else:
