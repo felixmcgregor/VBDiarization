@@ -425,7 +425,7 @@ class Utils(object):
 
         """
         with open(config_path, 'r') as ymlfile:
-            return yaml.load(ymlfile)
+            return yaml.safe_load(ymlfile)
 
     @staticmethod
     def l2_norm(ivecs):
